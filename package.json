@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "server": "nx serve server"
+    "client": "nx serve client",
+    "server": "nx serve server",
+    "build": "nx run-many -t build",
+    "start:prod": "node dist/apps/server/main"
   },
   "private": true,
   "dependencies": {
