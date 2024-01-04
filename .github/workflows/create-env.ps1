@@ -5,7 +5,7 @@ $short_sha = $env:GITHUB_SHA.Substring(0, 7)
 $envContent = @"
 PORT=$env:APP_PORT
 HOSTNAME=$env:APP_HOSTNAME
-GIT_COMMIT=$short_sha
+GIT_COMMIT=$env:GITHUB_SHA
 "@
 
 # Write the content to a new .env file
