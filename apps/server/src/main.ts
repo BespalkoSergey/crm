@@ -7,11 +7,13 @@ import { CONFIG_KEYS } from './app/constants/config-keys'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  app.disable('x-powered-by')
   app.enableShutdownHooks()
   const config: ConfigService = app.get(ConfigService)
-  const port = Number(config.get(CONFIG_KEYS.PORT))
-  await app.listen(port)
-  Logger.log(`🚀 Application is running, port ${port}, commit ${config.get(CONFIG_KEYS.GIT_COMMIT)}`)
+  await app.listen(Number(config.get(CONFIG_KEYS.PORT)), String(config.get(CONFIG_KEYS.HOSTNAME)), () => {
+    const logger = new Logger(CONFIG_KEYS.GIT_COMMIT)
+    logger.log(config.get(CONFIG_KEYS.GIT_COMMIT))
+  })
 }
 
 bootstrap()
