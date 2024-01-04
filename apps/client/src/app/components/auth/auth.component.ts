@@ -6,7 +6,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { InputTextModule } from 'primeng/inputtext'
 import { PasswordModule } from 'primeng/password'
 import { AuthService } from '../../services/auth.service'
-import { NgOptimizedImage } from '@angular/common'
 // import { isNotEmptyString } from '@crm/shared'
 
 export const isNotEmptyString = (context: unknown): context is string => typeof context === 'string' && !!context.trim()
@@ -14,11 +13,11 @@ export const isNotEmptyString = (context: unknown): context is string => typeof 
 @Component({
   selector: 'app-crm-auth',
   standalone: true,
-  imports: [CardModule, ButtonModule, ReactiveFormsModule, InputTextModule, PasswordModule, NgOptimizedImage],
+  imports: [CardModule, ButtonModule, ReactiveFormsModule, InputTextModule, PasswordModule],
   template: `
     <p-card class="auth-wrapper">
       <div class="auth-logo">
-        <img ngSrc="assets/icons/favicon.svg" alt="icon" height="100%" width="auto" loading="eager" />
+        <img src="assets/icons/favicon.svg" alt="icon" height="100%" width="auto" loading="eager" />
         <h2>CRM</h2>
       </div>
 
