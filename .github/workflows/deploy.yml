@@ -17,7 +17,7 @@ jobs:
         run: cp .github/workflows/tmpl.json dist/package.json
       - name: install dependencies in dist directory
         working-directory: ./dist
-        run: npm ci
+        run: npm i
       - name: added .env file
         env:
           APP_PORT: ${{ secrets.APP_PORT }}
