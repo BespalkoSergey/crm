@@ -13,6 +13,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+      - name: create package.json in dist directory
+        run: cp package.json dist/package.json
       - name: added .env file
         env:
           APP_PORT: ${{ secrets.APP_PORT }}
