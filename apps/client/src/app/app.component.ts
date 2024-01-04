@@ -1,14 +1,14 @@
 import { Component } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { NxWelcomeComponent } from './nx-welcome.component'
+import { UpdateComponent } from './components/update/update.component'
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
-  selector: 'client-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [RouterModule, UpdateComponent],
+  selector: 'app-crm-root',
+  template: `
+    <app-crm-update />
+    <router-outlet />
+  `
 })
-export class AppComponent {
-  title = 'client'
-}
+export class AppComponent {}
