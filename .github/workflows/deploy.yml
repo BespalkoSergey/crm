@@ -13,6 +13,11 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+      - name: create package.json in dist directory
+        run: cp .github/workflows/tmpl.json dist/package.json
+      - name: install dependencies in dist directory
+        working-directory: ./dist
+        run: npm ci
       - name: added .env file
         env:
           APP_PORT: ${{ secrets.APP_PORT }}
@@ -24,7 +29,7 @@ jobs:
         uses: burnett01/rsync-deployments@5.2.1
         with:
           switches: -avzr --delete
-          path: .
+          path: dist/
           remote_host: ${{ secrets.REMOTE_HOST }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.REMOTE_KEY }}
