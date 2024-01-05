@@ -10,7 +10,7 @@ import { ApiModule } from './api/api.module'
       rootPath: join(__dirname, '..', 'client', 'browser')
     }),
     ConfigModule.forRoot({
-      envFilePath: [join(__dirname, '..', '..', '..', '.env'), join(__dirname, '.env')]
+      envFilePath: [join(__dirname, '..', '..', '..', '.env'), join(__dirname, '..', '..', '.env')]
     }),
     ApiModule
   ]
