@@ -6,6 +6,7 @@ $envContent = @"
 PORT=$env:APP_PORT
 HOSTNAME=$env:APP_HOSTNAME
 GIT_COMMIT=$short_sha
+BLOG_CONNECTION_STRING=$env:BLOG_CONNECTION_STRING
 "@
 
 # Write the content to a new .env file

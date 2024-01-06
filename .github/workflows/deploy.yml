@@ -23,6 +23,7 @@ jobs:
           APP_PORT: ${{ secrets.APP_PORT }}
           APP_HOSTNAME: ${{ secrets.APP_HOSTNAME }}
           GITHUB_SHA: ${{ github.sha }}
+          BLOG_CONNECTION_STRING: ${{ secrets.BLOG_CONNECTION_STRING }}
         run: ./.github/workflows/create-env.ps1
         shell: pwsh
       - name: rsync deploy
