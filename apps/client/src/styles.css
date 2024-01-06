@@ -2,6 +2,10 @@
 @import 'primeng/resources/primeng.css';
 @import 'primeicons/primeicons.css';
 
+.p-dialog-mask.p-component-overlay {
+  z-index: 9;
+}
+
 html,
 body {
   height: 100dvh;
