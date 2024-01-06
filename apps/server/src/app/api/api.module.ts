@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common'
+import { BlogModule } from './blog/blog.module'
 
 @Module({
-  imports: [],
-  providers: [],
-  controllers: [],
+  imports: [BlogModule],
   exports: []
 })
 export class ApiModule {}

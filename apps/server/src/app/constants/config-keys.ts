@@ -1,6 +1,7 @@
-type ConfigKeysType = 'PORT' | 'GIT_COMMIT' | 'HOSTNAME'
+type ConfigKeysType = 'PORT' | 'GIT_COMMIT' | 'HOSTNAME' | 'BLOG_CONNECTION_STRING'
 export const CONFIG_KEYS: { [Key in ConfigKeysType]: Key } = {
   PORT: 'PORT',
   GIT_COMMIT: 'GIT_COMMIT',
-  HOSTNAME: 'HOSTNAME'
+  HOSTNAME: 'HOSTNAME',
+  BLOG_CONNECTION_STRING: 'BLOG_CONNECTION_STRING'
 }
