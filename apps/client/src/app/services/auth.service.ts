@@ -11,6 +11,6 @@ export class AuthService {
 
   public login(_props: { username: string; password: string }): void {
     this._isLoggedIn = true
-    this.router.navigate(['/'])
+    this.router.navigate(['/board'])
   }
 }

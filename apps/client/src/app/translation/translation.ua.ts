@@ -1,3 +1,10 @@
+import { BlogModeUnion } from '../models/models'
+
+const blog: Record<BlogModeUnion, string> = {
+  add: 'Додавання',
+  edit: 'Редагування'
+}
+
 export const translation = {
   auth: {
     login: 'Увійти',
@@ -14,5 +21,9 @@ export const translation = {
     failDetail: 'Нажаль 😕<br />Зараз додаток перезавантажеться і це допоможе!',
     warn: 'Ти що?',
     warnDetail: 'Ми не можемо гарантувати тобі стабільність<br />якщо ти не будешь оновлюватись!'
+  },
+  nav: {
+    board: 'Доска',
+    blog
   }
 }
