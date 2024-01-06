@@ -1,16 +1,24 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { DatabaseService } from '../../database/database.service'
+
+type RowType = {
+  id: number
+  title: string
+  img_url: string
+  description: string
+  category_keywords: string
+  content_html: string
+  created_at: string
+  updated_at: string
+}
 
 @Injectable()
 export class BlogRepository {
-  private readonly logger = new Logger(BlogRepository.name)
-
   public constructor(private readonly database: DatabaseService) {}
-  public async getAll(): Promise<unknown[]> {
+  public async getAll(): Promise<RowType[]> {
     const rows = await this.database.query('SELECT * FROM `blogs`')
-    this.logger.log(rows)
     if (Array.isArray(rows)) {
-      return rows as unknown[]
+      return rows as RowType[]
     }
     return []
   }
