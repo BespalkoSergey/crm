@@ -7,8 +7,15 @@ import { translation } from '../../translation/translation.ua'
   selector: 'app-crm-nav',
   template: `
     <nav>
-      <a routerLink="/board" routerLinkActive="active">{{ translation.nav.board }}</a>
-      <a routerLink="/blog" routerLinkActive="active">{{ translation.nav.blog.add }}</a>
+      <a routerLink="/board" routerLinkActive="active">
+        <span class="pi pi-home"></span>
+        {{ translation.nav.board }}
+      </a>
+
+      <a routerLink="/blog" routerLinkActive="active">
+        <span class="pi pi-plus"></span>
+        {{ translation.nav.blog.add }}
+      </a>
     </nav>
   `,
   imports: [RouterLink, RouterLinkActive],
@@ -20,30 +27,27 @@ import { translation } from '../../translation/translation.ua'
         position: sticky;
         top: 0;
         padding: 20px 40px;
-        border-right: 3px solid black;
       }
 
       nav {
+        width: 300px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px 40px;
         display: flex;
         flex-direction: column;
         gap: 10px;
         height: calc(100dvh - 40px);
+        box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
+      }
+
+      nav a {
+        color: black;
+        text-decoration: none;
       }
 
       .active {
-        position: relative;
-      }
-
-      .active:after {
-        content: '';
-        display: block;
-        height: 20px;
-        width: 20px;
-        border-radius: 100%;
-        position: absolute;
-        top: 0;
-        left: -25px;
-        background-color: rgba(255, 255, 0, 0.99);
+        color: #6366f1 !important;
       }
     `
   ]
