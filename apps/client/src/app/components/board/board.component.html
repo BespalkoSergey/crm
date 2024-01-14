@@ -1,0 +1,56 @@
+<div class="wrapper">
+  <div class="cards">
+    <p class="card">
+      <span class="pi pi-pencil"></span>&nbsp;<span>{{ translation.blogs }}:</span>&nbsp;<span>{{ blogs().length }}</span>
+    </p>
+  </div>
+
+  <p class="card">
+    <p-table
+      [value]="blogs()"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{ 'min-width': '50rem', 'table-layout': 'fixed' }"
+      [currentPageReportTemplate]="translation.blogPageReport"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      [autoLayout]="true"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 2%">id</th>
+          <th style="width: 7%">title</th>
+          <th style="width: 10%">img_url</th>
+          <th style="width: 20%">description</th>
+          <th style="width: 10%" class="truncate" title="category_keywords">category_keywords</th>
+          <th style="width: 10%">content_html</th>
+          <th style="width: 10%">created_at</th>
+          <th style="width: 10%">updated_at</th>
+          <th style="width: 10%"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-context>
+        <tr *ngIf="assertAsBlog(context) as blog">
+          <td>{{ blog.id }}</td>
+          <td>{{ blog.title }}</td>
+          <td><img [src]="blog.img_url" alt="image" height="100" width="auto" loading="eager" /></td>
+          <td>{{ blog.description }}</td>
+          <td>{{ blog.category_keywords.join('\n') }}</td>
+          <td>
+            <p [title]="blog.content_html" class="line-clamp">{{ blog.content_html }}</p>
+          </td>
+          <td>{{ blog.created_at | date : 'dd/MM/yy HH:mm' }}</td>
+          <td>{{ blog.updated_at | date : 'dd/MM/yy HH:mm' }}</td>
+          <td>
+            <p class="actions">
+              <span class="action pi pi-pencil"></span>
+              <a [href]="'https://blog.my-space.org.ua/blog/' + blog.id" target="_blank"><span class="action pi pi-file-import"></span></a>
+              <span class="action pi pi-trash"></span>
+            </p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p>
+</div>

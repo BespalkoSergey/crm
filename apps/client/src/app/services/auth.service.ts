@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly router = inject(Router)
-  private _isLoggedIn = false
+  private _isLoggedIn = true
   public get isLoggedIn(): boolean {
     return this._isLoggedIn
   }

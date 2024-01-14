@@ -25,5 +25,7 @@ export const translation = {
   nav: {
     board: 'Доска',
     blog
-  }
+  },
+  blogs: 'Статті',
+  blogPageReport: 'На показі з {first} до {last}'
 }
