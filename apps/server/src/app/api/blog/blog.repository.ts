@@ -22,4 +22,13 @@ export class BlogRepository {
     }
     return []
   }
+
+  public async deleteBlogById(blogId: number): Promise<boolean> {
+    try {
+      await this.database.query('DELETE FROM `blogs` WHERE id = ?', [blogId])
+      return true
+    } catch (_) {
+      return false
+    }
+  }
 }

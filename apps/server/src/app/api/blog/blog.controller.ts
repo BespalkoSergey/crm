@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Delete, Get, Param } from '@nestjs/common'
 import { BlogService } from './blog.service'
 import { BlogType } from '@crm/shared'
 
@@ -8,5 +8,10 @@ export class BlogController {
   @Get('blogs')
   public async getAll(): Promise<BlogType[]> {
     return this.blogService.getAll()
+  }
+
+  @Delete('blogs/:id')
+  async deleteBlogById(@Param('id') blogId: string): Promise<boolean> {
+    return await this.blogService.deleteBlogById(+blogId)
   }
 }

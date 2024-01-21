@@ -14,4 +14,13 @@ export class BlogsService {
       })
     )
   }
+
+  public deleteBlogById(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`api/blogs/${id}`).pipe(
+      catchError(e => {
+        console.error(e)
+        return of(false)
+      })
+    )
+  }
 }

@@ -46,7 +46,7 @@
             <p class="actions">
               <span class="action pi pi-pencil"></span>
               <a [href]="'https://blog.my-space.org.ua/blog/' + blog.id" target="_blank"><span class="action pi pi-file-import"></span></a>
-              <span class="action pi pi-trash"></span>
+              <span class="action pi pi-trash" (click)="deleteBlog($event, blog.id)"></span>
             </p>
           </td>
         </tr>

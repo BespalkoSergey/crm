@@ -13,4 +13,8 @@ export class BlogService {
     }))
     return [...blogs].sort((a, b) => (new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime()) * -1)
   }
+
+  public async deleteBlogById(blogId: number): Promise<boolean> {
+    return this.blogRepository.deleteBlogById(blogId)
+  }
 }
