@@ -4,12 +4,13 @@ import { translation } from '../../translation/translation.ua'
 import { TableModule } from 'primeng/table'
 import { DatePipe, NgIf } from '@angular/common'
 import { BlogType } from '@crm/shared'
+import { RouterLink, RouterLinkActive } from '@angular/router'
 
 @Component({
   standalone: true,
   selector: 'app-crm-board',
   templateUrl: './board.component.html',
-  imports: [TableModule, NgIf, DatePipe],
+  imports: [TableModule, NgIf, DatePipe, RouterLink, RouterLinkActive],
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent {

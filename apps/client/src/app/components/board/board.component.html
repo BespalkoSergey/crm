@@ -44,7 +44,7 @@
           <td>{{ blog.updated_at | date : 'dd/MM/yy HH:mm' }}</td>
           <td>
             <p class="actions">
-              <span class="action pi pi-pencil"></span>
+              <a [routerLink]="['/blog', blog.id]"><span class="action pi pi-pencil"></span></a>
               <a [href]="'https://blog.my-space.org.ua/blog/' + blog.id" target="_blank"><span class="action pi pi-file-import"></span></a>
               <span class="action pi pi-trash" (click)="deleteBlog($event, blog.id)"></span>
             </p>
