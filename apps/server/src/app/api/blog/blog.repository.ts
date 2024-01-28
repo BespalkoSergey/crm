@@ -16,11 +16,7 @@ type RowType = {
 export class BlogRepository {
   public constructor(private readonly database: DatabaseService) {}
   public async getAll(): Promise<RowType[]> {
-    const rows = await this.database.query('SELECT * FROM `blogs` ORDER BY `blogs`.`updated_at` DESC')
-    if (Array.isArray(rows)) {
-      return rows as RowType[]
-    }
-    return []
+    return await this.database.query<RowType>('SELECT * FROM `blogs` ORDER BY `blogs`.`updated_at` DESC')
   }
 
   public async deleteBlogById(blogId: number): Promise<boolean> {

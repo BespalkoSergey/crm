@@ -1,47 +1,68 @@
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
-import mysql from 'mysql2/promise'
-import { ConfigService } from '@nestjs/config'
-import { CONFIG_KEYS } from '../constants/config-keys'
+import * as sqlite3 from 'sqlite3'
+
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DatabaseService.name)
-  private connection: mysql.Connection | null = null
-  public constructor(private readonly config: ConfigService) {}
-  public async onModuleInit(): Promise<void> {
-    await this.connect()
+  private db: sqlite3.Database | null = null
+  public onModuleInit(): void {
+    this.connect()
   }
-  public async onModuleDestroy(): Promise<void> {
-    if (this.connection) {
-      try {
-        await this.connection.end()
-      } catch (error) {
-        this.logger.error('Error disconnecting from database:', error)
-      }
-    }
+  public onModuleDestroy(): void {
+    this.disconnect()
   }
 
-  public async query(
-    query: string,
-    values?: unknown[]
-  ): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.ResultSetHeader[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket> {
-    if (!this.connection) {
-      await this.connect()
+  public async query<Value>(sql: string, params: unknown[] = []): Promise<Value[]> {
+    if (!this.isConnected) {
+      this.connect()
     }
 
     try {
-      const [rows] = await this.connection.query(query, values)
-      return rows
+      return new Promise((resolve, reject) => {
+        this.db.all<Value>(sql, params, (err, rows) => {
+          if (err) {
+            reject(err)
+            throw err
+          } else {
+            resolve(rows)
+          }
+        })
+      })
     } catch (error) {
       this.logger.error('Error executing query:', error)
       throw error
     }
   }
 
-  private async connect() {
+  private connect(): void {
     try {
-      this.connection = await mysql.createConnection(this.config.get(CONFIG_KEYS.BLOG_CONNECTION_STRING))
+      this.db = new sqlite3.Database(__dirname + '/assets/database.db', error => {
+        if (error) {
+          throw error
+        } else {
+          this.logger.log('Connected to the SQLite database.')
+        }
+      })
     } catch (error) {
       this.logger.error('Error connecting to database:', error)
     }
+  }
+
+  private disconnect(): void {
+    try {
+      this.db.close(error => {
+        if (error) {
+          throw error
+        } else {
+          this.logger.log('Closed the SQLite database connection.')
+        }
+      })
+    } catch (error) {
+      this.logger.error('Error closing database:', error)
+    }
+  }
+
+  private get isConnected(): boolean {
+    return this.db !== null
   }
 }
