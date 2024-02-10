@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common'
 import { ButtonModule } from 'primeng/button'
 import { translation } from '../../translation/translation.ua'
 import { CloseBtnComponent } from '../../ui/close-btn/close-btn.component'
+import { InputTextModule } from 'primeng/inputtext'
 
 function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
   const binary = new Uint8Array(buffer)
@@ -24,16 +25,26 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
     <div class="blog" [formGroup]="form">
       <div class="input-wrapper">
         <input #inputFile type="file" accept="image/*" (change)="onChangeInputFile($event)" />
-        <p-button [label]="translation.blog.add" (click)="inputFile.click()"></p-button>
+        <p-button [label]="translation.blog.addImg" (click)="inputFile.click()"></p-button>
 
         <div *ngIf="form.get('imgUrl')?.value as imgUrl" class="image-wrapper">
           <app-crm-close-btn [style.right.px]="-10" [style.top.px]="-10" (click)="clearFromImage()"></app-crm-close-btn>
           <img [src]="imgUrl" alt="image for blog" height="160" width="auto" loading="eager" />
         </div>
       </div>
+
+      <div class="text-wrapper">
+        <label for="title">{{ translation.blog.title }}</label>
+        <input pInputText id="title" formControlName="title" [style.width.px]="600" />
+      </div>
+
+      <div class="text-wrapper">
+        <label for="description">{{ translation.blog.description }}</label>
+        <input pInputText id="description" formControlName="description" [style.width.px]="600" />
+      </div>
     </div>
   `,
-  imports: [ReactiveFormsModule, NgIf, ButtonModule, CloseBtnComponent],
+  imports: [ReactiveFormsModule, NgIf, ButtonModule, CloseBtnComponent, InputTextModule],
   styles: [
     `
       .blog {
@@ -58,6 +69,14 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
       .image-wrapper {
         align-self: flex-start;
         position: relative;
+      }
+      .text-wrapper {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-size: 14px;
+        padding: 20px 0 10px 10px;
       }
     `
   ]
