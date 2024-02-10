@@ -6,6 +6,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { NgIf } from '@angular/common'
 import { ButtonModule } from 'primeng/button'
 import { translation } from '../../translation/translation.ua'
+import { CloseBtnComponent } from '../../ui/close-btn/close-btn.component'
 
 function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
   const binary = new Uint8Array(buffer)
@@ -21,22 +22,18 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
   selector: 'app-crm-blog',
   template: `
     <div class="blog" [formGroup]="form">
-      <div class="image-wrapper">
+      <div class="input-wrapper">
         <input #inputFile type="file" accept="image/*" (change)="onChangeInputFile($event)" />
         <p-button [label]="translation.blog.add" (click)="inputFile.click()"></p-button>
-        <img
-          *ngIf="form.get('imgUrl')?.value as imgUrl"
-          [src]="imgUrl"
-          [style.align-self]="'flex-start'"
-          alt="image for blog"
-          height="160"
-          width="auto"
-          loading="eager"
-        />
+
+        <div *ngIf="form.get('imgUrl')?.value as imgUrl" class="image-wrapper">
+          <app-crm-close-btn [style.right.px]="-10" [style.top.px]="-10" (click)="clearFromImage()"></app-crm-close-btn>
+          <img [src]="imgUrl" alt="image for blog" height="160" width="auto" loading="eager" />
+        </div>
       </div>
     </div>
   `,
-  imports: [ReactiveFormsModule, NgIf, ButtonModule],
+  imports: [ReactiveFormsModule, NgIf, ButtonModule, CloseBtnComponent],
   styles: [
     `
       .blog {
@@ -46,15 +43,21 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
         padding: 20px 40px;
         box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
       }
-      .image-wrapper {
+
+      .input-wrapper {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 20px;
       }
-      .image-wrapper input[type='file'] {
+
+      .input-wrapper input[type='file'] {
         visibility: hidden;
         position: absolute;
+      }
+      .image-wrapper {
+        align-self: flex-start;
+        position: relative;
       }
     `
   ]
@@ -120,9 +123,11 @@ export class BlogComponent {
         }
 
         reader.readAsArrayBuffer(file)
-      } else {
-        this.form.patchValue({ imgUrl: '' })
       }
     }
+  }
+
+  public clearFromImage(): void {
+    this.form.patchValue({ imgUrl: '' })
   }
 }
