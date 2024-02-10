@@ -7,6 +7,15 @@ import { NgIf } from '@angular/common'
 import { ButtonModule } from 'primeng/button'
 import { translation } from '../../translation/translation.ua'
 
+function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
+  const binary = new Uint8Array(buffer)
+  let base64String = ''
+  for (let i = 0; i < binary.length; i++) {
+    base64String += String.fromCharCode(binary[i])
+  }
+  return `data:image/png;base64,${btoa(base64String)}`
+}
+
 @Component({
   standalone: true,
   selector: 'app-crm-blog',
@@ -105,7 +114,7 @@ export class BlogComponent {
         reader.onload = (e: ProgressEvent<FileReader>) => {
           const result = e.target?.result
           if (result instanceof ArrayBuffer) {
-            const base64String = this.arrayBufferToImageBase64(result)
+            const base64String = arrayBufferToImageBase64(result)
             this.form.patchValue({ imgUrl: base64String })
           }
         }
@@ -115,14 +124,5 @@ export class BlogComponent {
         this.form.patchValue({ imgUrl: '' })
       }
     }
-  }
-
-  private arrayBufferToImageBase64(buffer: ArrayBuffer): string {
-    const binary = new Uint8Array(buffer)
-    let base64String = ''
-    for (let i = 0; i < binary.length; i++) {
-      base64String += String.fromCharCode(binary[i])
-    }
-    return `data:image/png;base64,${btoa(base64String)}`
   }
 }
