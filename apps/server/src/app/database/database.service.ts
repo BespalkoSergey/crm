@@ -36,7 +36,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
 
   private connect(): void {
     try {
-      this.db = new sqlite3.Database(__dirname + '/assets/database.db', error => {
+      this.db = new sqlite3.Database(__dirname + '../../../../database.db', error => {
         if (error) {
           throw error
         } else {

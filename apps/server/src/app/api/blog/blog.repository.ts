@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { DatabaseService } from '../../database/database.service'
+import { BlogType } from '@crm/shared'
 
 type RowType = {
   id: number
@@ -26,5 +27,9 @@ export class BlogRepository {
     } catch (_) {
       return false
     }
+  }
+
+  public async getBlogById(blogId: number): Promise<RowType[]> {
+    return await this.database.query<RowType>('SELECT * FROM `blogs` WHERE id = ?', [blogId])
   }
 }

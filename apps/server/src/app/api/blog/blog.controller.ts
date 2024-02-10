@@ -6,12 +6,17 @@ import { BlogType } from '@crm/shared'
 export class BlogController {
   public constructor(private readonly blogService: BlogService) {}
   @Get('blogs')
-  public async getAll(): Promise<BlogType[]> {
+  public getAll(): Promise<BlogType[]> {
     return this.blogService.getAll()
   }
 
+  @Get('blogs/:id')
+  public getBlogById(@Param('id') blogId: string): Promise<BlogType | null> {
+    return this.blogService.getBlogById(+blogId)
+  }
+
   @Delete('blogs/:id')
-  async deleteBlogById(@Param('id') blogId: string): Promise<boolean> {
-    return await this.blogService.deleteBlogById(+blogId)
+  public deleteBlogById(@Param('id') blogId: string): Promise<boolean> {
+    return this.blogService.deleteBlogById(+blogId)
   }
 }
