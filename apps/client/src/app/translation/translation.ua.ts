@@ -27,5 +27,8 @@ export const translation = {
     blog
   },
   blogs: 'Статті',
-  blogPageReport: 'На показі з {first} по {last}'
+  blogPageReport: 'На показі з {first} по {last}',
+  blog: {
+    add: 'Додати'
+  }
 }
