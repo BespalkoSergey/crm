@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { isNotEmptyString } from '../auth/auth.component'
 import { BlogsService } from '../../services/blogs.service'
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
-import { NgIf } from '@angular/common'
+import { NgForOf, NgIf } from '@angular/common'
 import { ButtonModule } from 'primeng/button'
 import { translation } from '../../translation/translation.ua'
 import { CloseBtnComponent } from '../../ui/close-btn/close-btn.component'
@@ -42,9 +42,23 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
         <label for="description">{{ translation.blog.description }}</label>
         <input pInputText id="description" formControlName="description" [style.width.px]="600" />
       </div>
+
+      <div class="tag-wrapper">
+        <div class="tag-input">
+          <input pInputText id="title" [formControl]="tagControl" [style.width.px]="300" />
+          <p-button [label]="translation.blog.addTag" (click)="addTag()"></p-button>
+        </div>
+
+        <p *ngIf="form.get('categoryKeywords')?.value as list" class="tags">
+          <span *ngFor="let tag of list; let index = index; trackBy: trackByTag" class="tag">
+            <app-crm-close-btn [style.right.px]="-9" [style.top.px]="-9" (click)="deleteTag(index)"></app-crm-close-btn>
+            <span>{{ tag }}</span>
+          </span>
+        </p>
+      </div>
     </div>
   `,
-  imports: [ReactiveFormsModule, NgIf, ButtonModule, CloseBtnComponent, InputTextModule],
+  imports: [ReactiveFormsModule, NgIf, ButtonModule, CloseBtnComponent, InputTextModule, NgForOf],
   styles: [
     `
       .blog {
@@ -66,17 +80,43 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
         visibility: hidden;
         position: absolute;
       }
+
       .image-wrapper {
         align-self: flex-start;
         position: relative;
       }
+
       .text-wrapper {
         display: flex;
         flex-direction: column;
       }
+
       label {
         font-size: 14px;
         padding: 20px 0 10px 10px;
+      }
+
+      .tag-wrapper {
+        margin-top: 20px;
+      }
+
+      .tag-input {
+        display: flex;
+        gap: 20px;
+      }
+
+      .tags {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .tag {
+        position: relative;
+        white-space: nowrap;
+        background-color: rgb(238, 238, 238);
+        padding: 3px 10px;
+        border-radius: 10px;
       }
     `
   ]
@@ -84,6 +124,7 @@ function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
 export class BlogComponent {
   private readonly id = signal<string | null>(null)
   public readonly translation = translation
+  public readonly tagControl = new FormControl('')
   public readonly form = new FormGroup({
     id: new FormControl<string | null>(null),
     title: new FormControl(''),
@@ -148,5 +189,33 @@ export class BlogComponent {
 
   public clearFromImage(): void {
     this.form.patchValue({ imgUrl: '' })
+  }
+
+  public deleteTag(index: number): void {
+    const control = this.form.get('categoryKeywords') as FormControl<string[]>
+    if (!Array.isArray(control.value)) {
+      return
+    }
+
+    control.setValue(control.value.filter((_, i) => i !== index))
+  }
+
+  public addTag(): void {
+    const control = this.form.get('categoryKeywords') as FormControl<string[]>
+    if (!Array.isArray(control.value)) {
+      return
+    }
+
+    const tag = this.tagControl.value
+    if (!isNotEmptyString(tag)) {
+      return
+    }
+
+    control.setValue([...control.value, tag])
+    this.tagControl.setValue('')
+  }
+
+  public trackByTag(_: number, tag: string): string {
+    return tag
   }
 }

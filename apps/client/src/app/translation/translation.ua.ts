@@ -30,6 +30,7 @@ export const translation = {
   blogPageReport: 'На показі з {first} по {last}',
   blog: {
     addImg: 'Додати картинку',
+    addTag: 'Додати тег',
     title: 'Заголовок',
     description: 'Опис'
   }
