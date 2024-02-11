@@ -9,13 +9,13 @@ import { translation } from '../../translation/translation.ua'
 import { CloseBtnComponent } from '../../ui/close-btn/close-btn.component'
 import { InputTextModule } from 'primeng/inputtext'
 
-function arrayBufferToImageBase64(buffer: ArrayBuffer): string {
+function arrayBufferToImageBase64(buffer: ArrayBuffer, type: string): string {
   const binary = new Uint8Array(buffer)
   let base64String = ''
   for (let i = 0; i < binary.length; i++) {
     base64String += String.fromCharCode(binary[i])
   }
-  return `data:image/png;base64,${btoa(base64String)}`
+  return `data:${type};base64,${btoa(base64String)}`
 }
 
 @Component({
@@ -177,7 +177,7 @@ export class BlogComponent {
         reader.onload = (e: ProgressEvent<FileReader>) => {
           const result = e.target?.result
           if (result instanceof ArrayBuffer) {
-            const base64String = arrayBufferToImageBase64(result)
+            const base64String = arrayBufferToImageBase64(result, file.type)
             this.form.patchValue({ imgUrl: base64String })
           }
         }
